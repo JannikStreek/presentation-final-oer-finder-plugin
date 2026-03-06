@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OER Finder Plugin — Abschlusspräsentation</title>
+
+    <!-- Fonts: Be Vietnam Pro (headings/body) + Fira Code (mono accents) -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!--
+        ╔══════════════════════════════════════════╗
+        ║   DEMO KONFIGURATION                     ║
+        ║   Passe die URL an deinen laufenden      ║
+        ║   OER Finder Proxy Server an.            ║
+        ╚══════════════════════════════════════════╝
+    -->
+    <script>
+        window.OER_DEMO_URL = 'http://localhost:3000';
+    </script>
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME)
+           =========================================== */
+        :root {
+            /* Colors — b310.de palette */
+            --bg-primary: #0a1628;
+            --bg-card: rgba(207,255,178,0.04);
+            --bg-card-border: rgba(207,255,178,0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255,255,255,0.6);
+            --text-muted: rgba(255,255,255,0.3);
+            --accent: #CFFFB2;
+            --accent-dim: rgba(207,255,178,0.15);
+            --accent-glow: rgba(207,255,178,0.08);
+            --navy: #001F4B;
+            --navy-light: #0f2a52;
+
+            /* Typography — INCREASED for presentation readability */
+            --font-display: 'Be Vietnam Pro', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --title-size: clamp(2.5rem, 6vw, 5rem);
+            --h2-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            --h3-size: clamp(1.3rem, 2.5vw, 2rem);
+            --body-size: clamp(1.05rem, 1.7vw, 1.5rem);
+            --small-size: clamp(0.9rem, 1.2vw, 1.15rem);
+            --code-size: clamp(0.85rem, 1.1vw, 1.05rem);
+
+            /* Spacing */
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.8rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 1vw, 1rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.6s;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ===========================================
+           VIEWPORT FITTING: MANDATORY BASE STYLES
+           =========================================== */
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+        .card, .container, .content-box {
+            max-width: min(90vw, 1100px);
+            max-height: min(80vh, 700px);
+        }
+        .feature-list, .bullet-list {
+            gap: clamp(0.4rem, 1vh, 1rem);
+        }
+        .feature-list li, .bullet-list li {
+            font-size: var(--body-size);
+            line-height: 1.4;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+        img, .image-container {
+            max-width: 100%;
+            max-height: min(50vh, 400px);
+            object-fit: contain;
+        }
+
+        /* Short viewports (< 700px height) */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.5rem, 5vw, 3rem);
+                --h2-size: clamp(1.3rem, 3.5vw, 2.2rem);
+            }
+        }
+        /* Very short viewports (< 600px height) */
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+                --title-size: clamp(1.3rem, 4.5vw, 2.5rem);
+                --body-size: clamp(0.9rem, 1.4vw, 1.2rem);
+            }
+            .nav-dots, .keyboard-hint, .decorative { display: none; }
+        }
+        /* Extremely short (< 500px height) */
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.4rem, 2vw, 1rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --h2-size: clamp(1rem, 3vw, 1.5rem);
+                --body-size: clamp(0.85rem, 1.2vw, 1.05rem);
+            }
+        }
+        /* Narrow viewports (< 600px width) */
+        @media (max-width: 600px) {
+            :root { --title-size: clamp(1.5rem, 8vw, 3rem); }
+            .cards-2, .cards-3 { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* ===========================================
+           PRESENTATION THEME
+           =========================================== */
+        body {
+            background: var(--bg-primary);
+            font-family: var(--font-display);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Top bar --- */
+        .top-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: clamp(36px, 5vh, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--slide-padding);
+            border-bottom: 1px solid var(--bg-card-border);
+            z-index: 10;
+        }
+        .top-bar .brand {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .top-bar .slide-meta {
+            font-family: var(--font-mono);
+            font-size: clamp(0.65rem, 0.9vw, 0.85rem);
+            color: var(--text-muted);
+        }
+
+        /* --- Gradient orb background --- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 {
+            width: clamp(200px, 40vw, 500px);
+            height: clamp(200px, 40vw, 500px);
+            right: -8vw; bottom: -12vh;
+            background: radial-gradient(circle, rgba(207,255,178,0.1) 0%, transparent 65%);
+        }
+        .orb-2 {
+            width: clamp(150px, 25vw, 350px);
+            height: clamp(150px, 25vw, 350px);
+            left: -5vw; top: 10vh;
+            background: radial-gradient(circle, rgba(0,31,75,0.5) 0%, transparent 65%);
+        }
+
+        /* --- Section label chip --- */
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            color: var(--accent);
+            background: var(--accent-glow);
+            border: 1px solid rgba(207,255,178,0.18);
+            padding: 0.3em 0.9em;
+            border-radius: 100px;
+            margin-bottom: var(--content-gap);
+            width: fit-content;
+        }
+        .chip::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* --- Headings --- */
+        .slide h1 {
+            font-weight: 800;
+            font-size: var(--title-size);
+            line-height: 1.1;
+            margin-bottom: var(--element-gap);
+        }
+        .slide h2 {
+            font-weight: 700;
+            font-size: var(--h2-size);
+            line-height: 1.15;
+            margin-bottom: var(--content-gap);
+        }
+        .slide h3 {
+            font-weight: 600;
+            font-size: var(--h3-size);
+            line-height: 1.25;
+            margin-bottom: var(--element-gap);
+        }
+        .highlight {
+            background: linear-gradient(135deg, #CFFFB2, #7defa0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* --- Body text --- */
+        .body-text {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        /* --- Bullet lists --- */
+        .bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1vh, 0.9rem);
+        }
+        .bullets li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+            padding-left: 1.4em;
+            position: relative;
+        }
+        .bullets li::before {
+            content: '\203A';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* --- Cards grid --- */
+        .cards {
+            display: grid;
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+        }
+        .cards-2 { grid-template-columns: repeat(2, 1fr); }
+        .cards-3 { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 700px) {
+            .cards-2, .cards-3 { grid-template-columns: 1fr; }
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 8px;
+            padding: clamp(0.9rem, 1.8vw, 1.5rem);
+            max-height: none;
+        }
+        .card h3 {
+            font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+            color: var(--text-primary);
+            margin-bottom: clamp(0.3rem, 0.6vw, 0.5rem);
+        }
+        .card p {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .card .card-icon {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            margin-bottom: clamp(0.3rem, 0.6vw, 0.5rem);
+        }
+
+        /* --- Code blocks (simplified, for integration slide) --- */
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 8px;
+            padding: clamp(0.8rem, 1.8vw, 1.5rem);
+            font-family: var(--font-mono);
+            font-size: var(--code-size);
+            line-height: 1.65;
+            color: rgba(255,255,255,0.8);
+            overflow: hidden;
+            max-width: min(90vw, 800px);
+        }
+        .code-block .tag { color: #CFFFB2; }
+        .code-block .type { color: #8be9fd; }
+        .code-block .string { color: #f1fa8c; }
+        .code-block .comment { color: rgba(255,255,255,0.35); }
+
+        /* --- Architecture diagram --- */
+        .arch-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(0.3rem, 0.8vh, 0.6rem);
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+        }
+        .arch-box {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 6px;
+            padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1.2rem, 2.5vw, 2.5rem);
+            text-align: center;
+            color: var(--text-primary);
+            min-width: clamp(180px, 30vw, 320px);
+            font-size: var(--small-size);
+        }
+        .arch-box.accent {
+            border-color: rgba(207,255,178,0.3);
+            background: var(--accent-glow);
+        }
+        .arch-arrow {
+            color: var(--accent);
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+        }
+        .arch-sources {
+            display: flex;
+            gap: clamp(0.4rem, 1vw, 1rem);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .arch-sources .arch-box {
+            min-width: auto;
+            padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.8rem, 1.5vw, 1.5rem);
+        }
+
+        /* --- Two-column layout --- */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 3vw, 3rem);
+            align-items: start;
+        }
+        @media (max-width: 700px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+
+        /* --- Divider line --- */
+        .divider {
+            width: clamp(30px, 4vw, 60px);
+            height: 2px;
+            background: var(--accent);
+            margin-bottom: var(--content-gap);
+        }
+
+        /* --- Stats row --- */
+        .stats {
+            display: flex;
+            gap: clamp(1.5rem, 4vw, 4rem);
+            flex-wrap: wrap;
+        }
+        .stat .stat-number {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .stat .stat-label {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            margin-top: 0.3em;
+        }
+
+        /* ===========================================
+           ANIMATIONS — Reveal on scroll
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.12s; }
+        .reveal:nth-child(3) { transition-delay: 0.19s; }
+        .reveal:nth-child(4) { transition-delay: 0.26s; }
+        .reveal:nth-child(5) { transition-delay: 0.33s; }
+        .reveal:nth-child(6) { transition-delay: 0.40s; }
+
+        /* --- Sources reveal animation (click to show) --- */
+        @keyframes fadeInSources {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Progress bar --- */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 9999;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(207,255,178,0.4);
+        }
+
+        /* --- Nav dots --- */
+        .nav-dots {
+            position: fixed;
+            right: clamp(0.8rem, 1.5vw, 1.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(4px, 0.5vh, 8px);
+            z-index: 1000;
+        }
+        .nav-dot {
+            width: clamp(6px, 0.6vw, 9px);
+            height: clamp(6px, 0.6vw, 9px);
+            border-radius: 50%;
+            background: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+        .nav-dot.active {
+            background: var(--accent);
+            transform: scale(1.4);
+        }
+
+        /* Nav dots on light slides */
+        .nav-dots.on-light .nav-dot {
+            background: rgba(0,31,75,0.25);
+        }
+        .nav-dots.on-light .nav-dot.active {
+            background: var(--navy);
+        }
+
+        /* --- Slide content padding for top bar --- */
+        .slide .slide-content {
+            padding-top: clamp(3rem, 7vh, 5rem);
+        }
+
+        /* --- Title slide special --- */
+        .title-slide .slide-content {
+            justify-content: center;
+            padding-left: clamp(2rem, 6vw, 8rem);
+        }
+
+        /* --- End slide --- */
+        .end-slide .slide-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* ===========================================
+           LIGHT SLIDE THEME
+           =========================================== */
+        .slide.light {
+            background: #f8f9fa;
+        }
+        .slide.light .top-bar {
+            border-bottom-color: rgba(0,31,75,0.1);
+        }
+        .slide.light .top-bar .brand {
+            color: var(--navy);
+        }
+        .slide.light .top-bar .slide-meta {
+            color: rgba(0,31,75,0.35);
+        }
+        .slide.light .chip {
+            color: var(--navy);
+            background: rgba(0,31,75,0.06);
+            border-color: rgba(0,31,75,0.15);
+        }
+        .slide.light .chip::before {
+            background: var(--navy);
+        }
+        .slide.light h2,
+        .slide.light h3 {
+            color: #0a1628;
+        }
+        .slide.light .highlight {
+            background: linear-gradient(135deg, #001F4B, #1a4a7a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .slide.light .body-text {
+            color: rgba(10,22,40,0.65);
+        }
+        .slide.light .bullets li {
+            color: rgba(10,22,40,0.7);
+        }
+        .slide.light .bullets li::before {
+            color: var(--navy);
+        }
+        .slide.light .card {
+            background: #ffffff;
+            border-color: rgba(0,31,75,0.08);
+            box-shadow: 0 1px 3px rgba(0,31,75,0.06);
+        }
+        .slide.light .card h3 {
+            color: #0a1628;
+        }
+        .slide.light .card p {
+            color: rgba(10,22,40,0.6);
+        }
+        .slide.light .code-block {
+            background: #0a1628;
+            border-color: rgba(0,31,75,0.15);
+        }
+        .slide.light .arch-box {
+            background: #ffffff;
+            border-color: rgba(0,31,75,0.12);
+            color: #0a1628;
+        }
+        .slide.light .arch-box.accent {
+            border-color: var(--navy);
+            background: rgba(0,31,75,0.05);
+        }
+        .slide.light .arch-arrow {
+            color: var(--navy);
+        }
+        .slide.light .orb-1 {
+            background: radial-gradient(circle, rgba(0,31,75,0.04) 0%, transparent 65%);
+        }
+        .slide.light .orb-2 {
+            background: radial-gradient(circle, rgba(207,255,178,0.12) 0%, transparent 65%);
+        }
+        .slide.light .stat-number {
+            color: var(--navy);
+        }
+        .slide.light .stat-label {
+            color: rgba(10,22,40,0.5);
+        }
+        .slide.light .divider {
+            background: var(--navy);
+        }
+
+        /* ===========================================
+           DEMO SLIDE STYLES
+           =========================================== */
+        .demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(0.8rem, 1.5vh, 1.2rem);
+            width: 100%;
+        }
+        .demo-mockup {
+            background: #ffffff;
+            border-radius: 12px;
+            width: min(90vw, 800px);
+            max-height: min(55vh, 450px);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(207,255,178,0.15);
+            position: relative;
+        }
+        .demo-browser-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: clamp(0.4rem, 0.7vw, 0.6rem) clamp(0.6rem, 1vw, 0.8rem);
+            background: #f1f3f5;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .demo-browser-dot {
+            width: clamp(8px, 0.6vw, 10px);
+            height: clamp(8px, 0.6vw, 10px);
+            border-radius: 50%;
+        }
+        .demo-browser-dot:nth-child(1) { background: #ff5f56; }
+        .demo-browser-dot:nth-child(2) { background: #ffbd2e; }
+        .demo-browser-dot:nth-child(3) { background: #27c93f; }
+        .demo-browser-url {
+            flex: 1;
+            margin-left: 8px;
+            font-family: var(--font-mono);
+            font-size: clamp(0.55rem, 0.75vw, 0.7rem);
+            color: #6b7280;
+            background: #ffffff;
+            padding: 0.25em 0.6em;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+        .demo-search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: clamp(0.6rem, 1.2vw, 1rem) clamp(0.8rem, 1.5vw, 1.2rem);
+            border-bottom: 1px solid #e5e7eb;
+            background: #fafbfc;
+        }
+        .demo-search-icon {
+            color: #9ca3af;
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+        }
+        .demo-search-text {
+            flex: 1;
+            font-family: var(--font-display);
+            font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+            color: #1f2937;
+            font-weight: 400;
+        }
+        .demo-results {
+            padding: clamp(0.5rem, 1vw, 0.8rem);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.4rem, 0.8vw, 0.6rem);
+        }
+        @media (max-width: 600px) { .demo-results { grid-template-columns: 1fr 1fr; } }
+
+        .demo-result-card {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.5s var(--ease-out-expo),
+                        transform 0.5s var(--ease-out-expo);
+        }
+        .slide.visible .demo-result-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .slide.visible .demo-result-card:nth-child(1) { transition-delay: 0.4s; }
+        .slide.visible .demo-result-card:nth-child(2) { transition-delay: 0.55s; }
+        .slide.visible .demo-result-card:nth-child(3) { transition-delay: 0.7s; }
+        .slide.visible .demo-result-card:nth-child(4) { transition-delay: 0.85s; }
+        .slide.visible .demo-result-card:nth-child(5) { transition-delay: 1.0s; }
+        .slide.visible .demo-result-card:nth-child(6) { transition-delay: 1.15s; }
+
+        .demo-result-thumb {
+            height: clamp(50px, 8vh, 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .demo-result-info {
+            padding: clamp(0.3rem, 0.6vw, 0.5rem);
+        }
+        .demo-result-title {
+            font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+            font-weight: 600;
+            color: #1f2937;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .demo-source-badge {
+            display: inline-block;
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            padding: 0.15em 0.5em;
+            border-radius: 3px;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+        .badge-openverse { background: #f0fdf4; color: #15803d; }
+        .badge-wikimedia { background: #eff6ff; color: #1d4ed8; }
+        .badge-arasaac { background: #fefce8; color: #a16207; }
+        .badge-amb { background: #faf5ff; color: #7e22ce; }
+        .badge-rpi { background: #fff1f2; color: #be123c; }
+
+        .demo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            background: var(--accent);
+            color: var(--bg-primary);
+            font-family: var(--font-display);
+            font-size: var(--body-size);
+            font-weight: 600;
+            padding: 0.6em 1.5em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(207,255,178,0.25);
+        }
+
+        /* Live web component container (shown if components load) */
+        .demo-live-container {
+            display: none;
+            width: min(90vw, 800px);
+            max-height: min(55vh, 450px);
+            overflow: auto;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(207,255,178,0.15);
+        }
+        .demo-live-container oer-search {
+            --primary-color: #001F4B;
+            --primary-hover-color: #0f2a52;
+            display: block;
+            padding: clamp(0.5rem, 1vw, 1rem);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation dots -->
+    <nav class="nav-dots" id="navDots" aria-label="Foliennavigation"></nav>
+
+    <!-- ===========================================
+         SLIDE 1: TITEL
+         =========================================== -->
+    <section class="slide title-slide" data-title="Titel">
+        <div class="top-bar">
+            <span class="brand">B310 Digital GmbH &middot; OER Finder Plugin</span>
+            <span class="slide-meta">Abschlusspräsentation &middot; 2026</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content" style="flex-direction: row; align-items: center; gap: clamp(1.5rem, 4vw, 4rem);">
+            <div style="flex: 1; min-width: 0;">
+                <div class="chip reveal">Abschlusspräsentation</div>
+                <h1 class="reveal">OER Finder<br><span class="highlight">Plugin</span></h1>
+                <p class="body-text reveal">Alle offenen Bildungsmaterialien an einem Ort &mdash; einfach durchsuchbar, datenschutzfreundlich und frei verfügbar.</p>
+            </div>
+            <div class="reveal" style="flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0;">
+                <img src="oer-finder-plugin-logo.png" alt="OER Finder Plugin Logo" style="width: clamp(150px, 30vw, 380px); max-height: min(60vh, 380px); object-fit: contain; filter: drop-shadow(0 8px 30px rgba(207,255,178,0.2));">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 2: AGENDA
+         =========================================== -->
+    <section class="slide light" data-title="Agenda">
+        <div class="top-bar">
+            <span class="brand">Agenda</span>
+            <span class="slide-meta">02 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Überblick</div>
+            <h2 class="reveal">Was erwartet euch?</h2>
+            <ul class="bullets reveal">
+                <li>Das Problem: Materialien verstreut &amp; schlecht auffindbar</li>
+                <li>Unsere Lösung: Das OER Finder Plugin</li>
+                <li>Server vs. Client &mdash; Chancen &amp; Herausforderungen</li>
+                <li>Live Demo &mdash; das Plugin in Aktion</li>
+                <li>Offenheit, Förderung &amp; Ausblick</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 3: DAS PROBLEM
+         =========================================== -->
+    <section class="slide" data-title="Problem">
+        <div class="top-bar">
+            <span class="brand">Kontext</span>
+            <span class="slide-meta">03 / 17</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Problemstellung</div>
+            <h2 class="reveal">OER-Materialien sind <span class="highlight">fragmentiert</span></h2>
+            <ul class="bullets reveal">
+                <li>Inhalte verteilt auf isolierte Silos &mdash; Openverse, Wikimedia, ARASAAC usw. wissen nichts voneinander</li>
+                <li>Niemand durchsucht freiwillig ein Dutzend Websites, um ein passendes Bild zu finden</li>
+                <li>Fehlende oder inkonsistente Metadaten erschweren die Suche zusätzlich</li>
+                <li>Jede Anwendung müsste die Anbindung an jede Quelle selbst neu programmieren &mdash; enormer Aufwand</li>
+                <li><strong style="color:var(--accent);">Bequemlichkeit gewinnt</strong> &mdash; gebraucht wird eine wiederverwendbare, eng integrierte Suche über alle Quellen</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 4: UNSERE LÖSUNG
+         =========================================== -->
+    <section class="slide" data-title="Lösung">
+        <div class="top-bar">
+            <span class="brand">Vision</span>
+            <span class="slide-meta">04 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Unsere Lösung</div>
+            <h2 class="reveal">Ein Plugin für <span class="highlight">alle OER-Quellen</span></h2>
+            <p class="body-text reveal">Eine JavaScript-Komponente, die sich in die meisten Frameworks einbinden lässt &mdash; direkt in der eigenen Anwendung.</p>
+            <div class="cards reveal" style="margin-top: var(--content-gap); grid-template-columns: repeat(3, 1fr);">
+                <div class="card">
+                    <div class="card-icon">&#x1F50D;</div>
+                    <h3>Wie eine Suchmaschine</h3>
+                    <p>Alle Quellen gleichzeitig durchsuchen &mdash; ein vertrautes Sucherlebnis</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F3AC;</div>
+                    <h3>Alle Medientypen</h3>
+                    <p>Bilder, Texte, Audio &amp; Video &mdash; alles über eine Suche auffindbar</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x2699;</div>
+                    <h3>Filterbar &amp; auswählbar</h3>
+                    <p>Quellen gezielt ein-/ausschalten, Ergebnisse filtern</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F9E9;</div>
+                    <h3>Direkt integriert</h3>
+                    <p>Läuft innerhalb der eigenen App &mdash; kein externer Dienst nötig</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F4DC;</div>
+                    <h3>Metadaten &amp; Handler</h3>
+                    <p>Lizenz, Autor &amp; Co. direkt in der App nutzbar &mdash; Custom Handler für eigene Logik</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F3A8;</div>
+                    <h3>Design anpassbar</h3>
+                    <p>Farben, Schriften &amp; Layout per CSS-Variablen an das eigene Design anpassen</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x2696;</div>
+                    <h3>Client oder Server</h3>
+                    <p>Freie Wahl zwischen client-seitigem und server-seitigem Betrieb</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 5: WIE ES FUNKTIONIERT
+         =========================================== -->
+    <section class="slide light" data-title="Funktionsweise">
+        <div class="top-bar">
+            <span class="brand">Funktionsweise</span>
+            <span class="slide-meta">05 / 17</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content">
+            <div class="chip reveal">So funktioniert es</div>
+            <h2 class="reveal">Der Weg einer <span class="highlight">Suchanfrage</span></h2>
+            <div class="arch-diagram reveal">
+                <div class="arch-box" style="min-width: clamp(220px, 40vw, 420px);">&#x1F4F1; Eigene Anwendung</div>
+                <div class="arch-arrow">&#x2193; <span style="font-size:0.7em; color:var(--text-muted);">eingebettet</span></div>
+                <div class="arch-box accent" style="min-width: clamp(220px, 40vw, 420px);">&#x1F9E9; OER Finder Plugin</div>
+                <div class="arch-arrow">&#x2193; <span style="font-size:0.7em; color:var(--text-muted);">optional</span></div>
+                <div class="arch-box" style="border-style: dashed; opacity: 0.85; min-width: clamp(220px, 40vw, 420px);">&#x1F5A5; Proxy Server</div>
+                <div class="arch-arrow">&#x2193; <span style="font-size:0.7em; color:var(--text-muted);">konfigurierbare Adapter</span></div>
+                <div class="arch-box accent" style="min-width: clamp(220px, 40vw, 420px);">z.&thinsp;B. AMB Nostr Relay, &hellip;</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 6: AMB-PROTOKOLL
+         =========================================== -->
+    <section class="slide" data-title="AMB-Protokoll">
+        <div class="top-bar">
+            <span class="brand">Standard</span>
+            <span class="slide-meta">06 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Einheitliches Datenformat</div>
+            <h2 class="reveal">Das <span class="highlight">AMB-Protokoll</span></h2>
+            <p class="body-text reveal">Alle Quellen liefern Daten in unterschiedlichen Formaten. Das OER Finder Plugin bildet jedes Ergebnis auf den AMB-Standard ab &mdash; so wird jede Quelle zum <strong style="color:var(--accent);">First-Class Citizen</strong>.</p>
+            <div class="cards cards-3 reveal" style="margin-top: var(--content-gap);">
+                <div class="card">
+                    <div class="card-icon">&#x1F4D0;</div>
+                    <h3>Ein Standard</h3>
+                    <p>AMB definiert einheitliche Metadaten für alle Bildungsressourcen &mdash; unabhängig von der Herkunft.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F310;</div>
+                    <h3>Dezentral via Nostr</h3>
+                    <p>Der AMB Nostr Relay speichert OER-Metadaten als kryptographisch signierte Events &mdash; ohne zentrale Instanz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F504;</div>
+                    <h3>Alles wird gemappt</h3>
+                    <p>Openverse, Wikimedia, ARASAAC &mdash; jede Quelle wird automatisch ins AMB-Format übersetzt.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 7: UNTERSTÜTZTE QUELLEN
+         =========================================== -->
+    <section class="slide light" data-title="Quellen">
+        <div class="top-bar">
+            <span class="brand">Quellen</span>
+            <span class="slide-meta">07 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <div class="chip reveal">Integrierte Anbieter</div>
+            <h2 class="reveal">Unterstützte <span class="highlight">OER-Quellen</span></h2>
+            <!-- AMB card: always visible, highlighted as main task -->
+            <div class="cards reveal" style="margin-top: var(--element-gap); grid-template-columns: 1fr; max-width: min(90vw, 700px); width: 100%;">
+                <div class="card" style="border-color: rgba(0,31,75,0.3); background: rgba(0,31,75,0.05); text-align: center; cursor: pointer;" onclick="document.getElementById('otherSources').style.display='grid'; this.style.cursor='default';">
+                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x2B50;</div>
+                    <h3 style="font-size: clamp(1.2rem, 2vw, 1.6rem);">AMB Nostr Relays &mdash; Kernvorhaben</h3>
+                    <p>Dezentrale Bildungsmaterialien über das Nostr-Protokoll &mdash; ein oder mehrere Relays frei konfigurierbar. <span style="color: rgba(0,31,75,0.4); font-style: italic;">(Klick für weitere Quellen)</span></p>
+                </div>
+            </div>
+            <!-- Other sources: hidden until click -->
+            <div class="cards cards-3" id="otherSources" style="display: none; margin-top: var(--element-gap); animation: fadeInSources 0.5s var(--ease-out-expo) forwards; max-width: min(90vw, 900px); width: 100%;">
+                <div class="card" style="text-align: center;">
+                    <h3>Openverse</h3>
+                    <p>Bilder &amp; Audio unter freien Lizenzen</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>ARASAAC</h3>
+                    <p>Piktogramme für leichte Sprache</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>RPI-Virtuell</h3>
+                    <p>Religionspädagogische Materialien &mdash; Danke an Joachim!</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>Wikimedia</h3>
+                    <p>Freie Medien aus Wikipedia &amp; Co.</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>+ Eigene Quellen</h3>
+                    <p>Weitere Anbieter jederzeit ergänzbar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 8: SERVER VS. CLIENT
+         =========================================== -->
+    <section class="slide" data-title="Server vs. Client">
+        <div class="top-bar">
+            <span class="brand">Architektur</span>
+            <span class="slide-meta">08 / 17</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Zwei Wege</div>
+            <h2 class="reveal">Server-Proxy vs. <span class="highlight">Direct-Client</span></h2>
+            <div class="cards cards-2 reveal" style="margin-top: var(--element-gap);">
+                <div class="card">
+                    <div class="card-icon">&#x1F5A5;</div>
+                    <h3>Server-Proxy</h3>
+                    <ul class="bullets">
+                        <li>Voller Datenschutz &mdash; Dritte sehen keine Nutzer-IPs</li>
+                        <li>Keine Zugriffssperre &mdash; Websites blockieren oft fremde Zugriffe (CORS), ein eigener Server umgeht das</li>
+                        <li>Bildtransformation &amp; Caching möglich</li>
+                        <li style="color:var(--text-muted); font-style:italic;">Eigener Server nötig; alle Nutzer teilen eine IP &mdash; Rate-Limits werden schneller erreicht</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F310;</div>
+                    <h3>Direct-Client</h3>
+                    <ul class="bullets">
+                        <li>Kein eigener Server nötig &mdash; sofort einsatzbereit</li>
+                        <li>Schneller für Nutzende &mdash; kein Umweg über Server</li>
+                        <li>Günstiger &mdash; keine Serverkosten</li>
+                        <li style="color:var(--text-muted); font-style:italic;">Zugriffssperren (CORS) &amp; Datenschutz müssen bedacht werden</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 9: HERAUSFORDERUNGEN
+         =========================================== -->
+    <section class="slide light" data-title="Herausforderungen">
+        <div class="top-bar">
+            <span class="brand">Herausforderungen</span>
+            <span class="slide-meta">09 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Spannungsfelder</div>
+            <h2 class="reveal">CORS, Datenschutz &amp; <span class="highlight">Sicherheit</span></h2>
+            <div class="cards cards-3 reveal" style="margin-top: var(--element-gap);">
+                <div class="card">
+                    <div class="card-icon">&#x1F6AB;</div>
+                    <h3>Zugriffssperren (CORS)</h3>
+                    <p>Browser verbieten aus Sicherheitsgründen, dass eine Website Daten von einer anderen lädt. Viele OER-Quellen sind deshalb vom Browser aus nicht direkt erreichbar &mdash; ein eigener Server kann das umgehen.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F6E1;</div>
+                    <h3>Datenschutz</h3>
+                    <p>Im Server-Modus bleiben Nutzerdaten geschützt. Im Client-Modus sehen Drittanbieter, wer was sucht.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F6A8;</div>
+                    <h3>Sicherheit</h3>
+                    <p>Der Server-Proxy ruft externe URLs ab &mdash; manipulierte Links (z.&thinsp;B. aus AMB-Events) können ein Sicherheitsrisiko darstellen (SSRF).</p>
+                </div>
+            </div>
+            <p class="body-text reveal" style="margin-top: var(--content-gap); font-style: italic; text-align: center; max-width: none;">Jeder Modus löst ein Problem und schafft ein anderes &mdash; die richtige Wahl hängt vom Einsatzzweck ab.</p>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 10: LIVE DEMO
+         =========================================== -->
+    <section class="slide" data-title="Live Demo" id="demoSlide">
+        <div class="top-bar">
+            <span class="brand">Demo</span>
+            <span class="slide-meta">10 / 17</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content" style="align-items: center;">
+            <div class="chip reveal">Live Demo</div>
+            <h2 class="reveal" style="text-align: center;">Das Plugin <span class="highlight">in Aktion</span></h2>
+
+            <!-- Fallback: CSS mockup of the search interface -->
+            <div class="demo-container reveal" id="demoFallback">
+                <div class="demo-mockup">
+                    <div class="demo-browser-bar">
+                        <div class="demo-browser-dot"></div>
+                        <div class="demo-browser-dot"></div>
+                        <div class="demo-browser-dot"></div>
+                        <span class="demo-browser-url">oer-finder-plugin</span>
+                    </div>
+                    <div class="demo-search-bar">
+                        <span class="demo-search-icon">&#x1F50D;</span>
+                        <span class="demo-search-text">Pflanzen</span>
+                    </div>
+                    <div class="demo-results">
+                        <div class="demo-result-card">
+                            <div class="demo-result-thumb" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);">&#x1F33F;</div>
+                            <div class="demo-result-info">
+                                <div class="demo-result-title">Pflanzen im Garten</div>
+                                <span class="demo-source-badge badge-openverse">Openverse</span>
+                            </div>
+                        </div>
+                        <div class="demo-result-card">
+                            <div class="demo-result-thumb" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">&#x1F33B;</div>
+                            <div class="demo-result-info">
+                                <div class="demo-result-title">Photosynthese</div>
+                                <span class="demo-source-badge badge-wikimedia">Wikimedia</span>
+                            </div>
+                        </div>
+                        <div class="demo-result-card">
+                            <div class="demo-result-thumb" style="background:linear-gradient(135deg,#fef9c3,#fde68a);">&#x1F338;</div>
+                            <div class="demo-result-info">
+                                <div class="demo-result-title">Blume</div>
+                                <span class="demo-source-badge badge-arasaac">ARASAAC</span>
+                            </div>
+                        </div>
+                        <div class="demo-result-card">
+                            <div class="demo-result-thumb" style="background:linear-gradient(135deg,#f3e8ff,#e9d5ff);">&#x1F331;</div>
+                            <div class="demo-result-info">
+                                <div class="demo-result-title">Botanik Grundlagen</div>
+                                <span class="demo-source-badge badge-amb">AMB Relay</span>
+                            </div>
+                        </div>
+                        <div class="demo-result-card">
+                            <div class="demo-result-thumb" style="background:linear-gradient(135deg,#ccfbf1,#99f6e4);">&#x1F33E;</div>
+                            <div class="demo-result-info">
+                                <div class="demo-result-title">Pflanzenzelle</div>
+                                <span class="demo-source-badge badge-rpi">RPI-Virtuell</span>
+                            </div>
+                        </div>
+                        <div class="demo-result-card">
+                            <div class="demo-result-thumb" style="background:linear-gradient(135deg,#fed7aa,#fdba74);">&#x1F343;</div>
+                            <div class="demo-result-info">
+                                <div class="demo-result-title">Samen &amp; Keimung</div>
+                                <span class="demo-source-badge badge-openverse">Openverse</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="demo-btn" onclick="window.open(window.OER_DEMO_URL || 'http://localhost:3000', '_blank')">
+                    &#x25B6; &ensp;Live Demo öffnen
+                </button>
+            </div>
+
+            <!-- Live web components (shown if loaded successfully) -->
+            <div class="demo-live-container reveal" id="demoLive">
+                <oer-search api-url="http://localhost:3000">
+                    <oer-list></oer-list>
+                    <oer-load-more></oer-load-more>
+                </oer-search>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 11: EINFACHE EINBINDUNG
+         =========================================== -->
+    <section class="slide" data-title="Einbindung">
+        <div class="top-bar">
+            <span class="brand">Integration</span>
+            <span class="slide-meta">11 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">So einfach geht's</div>
+            <h2 class="reveal">Einbindung in <span class="highlight">4 Zeilen*</span></h2>
+            <p class="body-text reveal">Das Plugin lässt sich in jede Website einbauen &mdash; mit nur wenigen Zeilen:</p>
+            <pre class="code-block reveal" style="margin-top: var(--content-gap); white-space: pre; tab-size: 2;"><span class="tag">&lt;oer-search</span> <span class="type">api-url</span>=<span class="string">"https://mein-server.de"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;oer-list&gt;&lt;/oer-list&gt;</span>
+  <span class="tag">&lt;oer-load-more&gt;&lt;/oer-load-more&gt;</span>
+<span class="tag">&lt;/oer-search&gt;</span></pre>
+            <p class="body-text reveal" style="margin-top: var(--content-gap); font-style: italic;">Das ist alles &mdash; Suche, Ergebnisliste und Nachladen sind sofort einsatzbereit.</p>
+            <p class="reveal" style="margin-top: var(--element-gap); font-size: var(--small-size); color: var(--text-muted);">* Weiterer Code nötig für die genaue Definition des Verhaltens</p>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 12: INTEGRATIONSSCHRITTE
+         =========================================== -->
+    <section class="slide light" data-title="Integrationsschritte">
+        <div class="top-bar">
+            <span class="brand">Integration</span>
+            <span class="slide-meta">12 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Schritt für Schritt</div>
+            <h2 class="reveal">So wird das Plugin <span class="highlight">eingebunden</span></h2>
+            <div class="reveal" style="margin-top: var(--content-gap); display: flex; align-items: center; gap: clamp(0.3rem, 0.8vw, 0.6rem); justify-content: center;">
+                <div class="card" style="text-align: center; flex: 1; max-width: 280px;">
+                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x1F4E6;</div>
+                    <h3>1. Plugin installieren</h3>
+                    <p>Das npm-Paket in das eigene Projekt einbinden</p>
+                </div>
+                <span style="font-size: clamp(1.2rem, 2.5vw, 2rem); color: rgba(0,31,75,0.3); flex-shrink: 0;">&#x27A1;</span>
+                <div class="card" style="text-align: center; flex: 1; max-width: 280px;">
+                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x1F9E9;</div>
+                    <h3>2. Web Components einsetzen</h3>
+                    <p>HTML-Struktur in die eigene Seite einfügen</p>
+                </div>
+                <span style="font-size: clamp(1.2rem, 2.5vw, 2rem); color: rgba(0,31,75,0.3); flex-shrink: 0;">&#x27A1;</span>
+                <div class="card" style="text-align: center; flex: 1; max-width: 280px;">
+                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x2699;</div>
+                    <h3>3. Verhalten definieren</h3>
+                    <p>Click-Handler &amp; Anpassungen &mdash; z.&thinsp;B. was beim Klick auf ein Ergebnis passiert</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 13: DATENSCHUTZ
+         =========================================== -->
+    <section class="slide light" data-title="Datenschutz">
+        <div class="top-bar">
+            <span class="brand">Datenschutz</span>
+            <span class="slide-meta">13 / 17</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Privacy by Design</div>
+            <h2 class="reveal">Datenschutz <span class="highlight">eingebaut</span></h2>
+            <div class="cards cards-2 reveal" style="margin-top: var(--element-gap);">
+                <div class="card">
+                    <div class="card-icon">&#x1F6E1;</div>
+                    <h3>Bilder über eigenen Server</h3>
+                    <p>Vorschaubilder werden über den eigenen Server geladen &mdash; so erfahren externe Anbieter nicht, wer sucht.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F50F;</div>
+                    <h3>Keine Tracking-Gefahr</h3>
+                    <p>Der Browser der Nutzenden hat keinen direkten Kontakt zu Drittanbietern. Die Privatsphäre bleibt geschützt.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 14: OPEN SOURCE & ERWEITERBAR
+         =========================================== -->
+    <section class="slide light" data-title="Open Source">
+        <div class="top-bar">
+            <span class="brand">Open Source</span>
+            <span class="slide-meta">14 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Offenheit</div>
+            <h2 class="reveal">Open Source &amp; <span class="highlight">erweiterbar</span></h2>
+            <div class="two-col reveal">
+                <div>
+                    <h3>Frei verfügbar</h3>
+                    <ul class="bullets">
+                        <li>MIT-Lizenz &mdash; kostenlos nutzbar</li>
+                        <li>Quellcode auf GitHub einsehbar</li>
+                        <li>Jeder kann mitentwickeln</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Leicht erweiterbar</h3>
+                    <ul class="bullets">
+                        <li>Neue OER-Quellen einfach anbindbar</li>
+                        <li>Funktioniert mit React, Angular, Svelte &amp; Co.</li>
+                        <li>Community-getriebene Entwicklung</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 15: FÖRDERUNG & LIZENZ
+         =========================================== -->
+    <section class="slide light" data-title="Förderung">
+        <div class="top-bar">
+            <span class="brand">Projekt</span>
+            <span class="slide-meta">15 / 17</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Förderung</div>
+            <h2 class="reveal">Förderung &amp; <span class="highlight">Lizenz</span></h2>
+            <div class="two-col reveal">
+                <div>
+                    <h3>Förderung</h3>
+                    <ul class="bullets">
+                        <li>Gefördert durch das BMBFSJ</li>
+                        <li>Förderkennzeichen: 01PZ25003</li>
+                        <li>Organisation: edufeed-org</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Lizenz</h3>
+                    <ul class="bullets">
+                        <li>MIT-Lizenz (vollständig Open Source)</li>
+                        <li>Freie Nutzung &amp; Weiterentwicklung</li>
+                        <li>29 veröffentlichte Versionen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 16: ZUSAMMENFASSUNG
+         =========================================== -->
+    <section class="slide" data-title="Zusammenfassung">
+        <div class="top-bar">
+            <span class="brand">Fazit</span>
+            <span class="slide-meta">16 / 17</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Zusammenfassung</div>
+            <h2 class="reveal">Was wir gebaut haben</h2>
+            <div class="cards cards-2 reveal" style="margin-top: var(--element-gap);">
+                <div class="card">
+                    <h3>Einheitliche OER-Suche</h3>
+                    <p>Viele Quellen mit einer einzigen Suchanfrage durchsuchen</p>
+                </div>
+                <div class="card">
+                    <h3>Datenschutzfreundlich</h3>
+                    <p>Nutzerdaten bleiben geschützt durch integrierten Proxy</p>
+                </div>
+                <div class="card">
+                    <h3>Einfach einbindbar</h3>
+                    <p>Wenige Zeilen genügen für die Integration in jede Website</p>
+                </div>
+                <div class="card">
+                    <h3>Open Source</h3>
+                    <p>Frei verfügbar, erweiterbar und von der Community getragen</p>
+                </div>
+            </div>
+            <div class="stats reveal" style="margin-top: var(--content-gap);">
+                <div class="stat">
+                    <div class="stat-number">6+</div>
+                    <div class="stat-label">OER-Quellen</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Zeilen Code</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">29</div>
+                    <div class="stat-label">Releases</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 17: DANKE / FRAGEN
+         =========================================== -->
+    <section class="slide end-slide" data-title="Ende">
+        <div class="top-bar">
+            <span class="brand">OER Finder Plugin</span>
+            <span class="slide-meta">Abschlusspräsentation &middot; 2026</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Vielen Dank</div>
+            <h1 class="reveal" style="margin-bottom: var(--content-gap);">Fragen<span class="highlight">?</span></h1>
+            <p class="body-text reveal" style="text-align: center; max-width: none;">
+                github.com/edufeed-org/oer-finder-plugin
+            </p>
+        </div>
+    </section>
+
+    <!-- ===========================================
+       SLIDE PRESENTATION CONTROLLER
+       =========================================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.isScrolling = false;
+                this.touchStartY = 0;
+
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupWheelNav();
+                this.setupProgressBar();
+                this.setupNavDots();
+
+                // Reveal first slide immediately
+                this.slides[0].classList.add('visible');
+            }
+
+            /* --- Intersection Observer: add .visible class --- */
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = Array.from(this.slides).indexOf(entry.target);
+                            if (idx !== -1) {
+                                this.currentSlide = idx;
+                                this.updateNavDots();
+                                this.updateProgressBar();
+                            }
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            /* --- Keyboard navigation --- */
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    switch (e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.goToSlide(this.currentSlide + 1);
+                            break;
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                        case 'PageUp':
+                            e.preventDefault();
+                            this.goToSlide(this.currentSlide - 1);
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.slides.length - 1);
+                            break;
+                    }
+                });
+            }
+
+            /* --- Touch / swipe support --- */
+            setupTouchNav() {
+                document.addEventListener('touchstart', (e) => {
+                    this.touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const diff = this.touchStartY - e.changedTouches[0].clientY;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) {
+                            this.goToSlide(this.currentSlide + 1);
+                        } else {
+                            this.goToSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Mouse wheel navigation --- */
+            setupWheelNav() {
+                let wheelTimeout;
+                document.addEventListener('wheel', (e) => {
+                    if (this.isScrolling) return;
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.goToSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.goToSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            /* --- Go to specific slide --- */
+            goToSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.isScrolling = true;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateNavDots();
+                this.updateProgressBar();
+                setTimeout(() => { this.isScrolling = false; }, 800);
+            }
+
+            /* --- Progress bar --- */
+            setupProgressBar() {
+                this.progressBar = document.getElementById('progressBar');
+                this.updateProgressBar();
+            }
+
+            updateProgressBar() {
+                if (!this.progressBar) return;
+                const progress = ((this.currentSlide + 1) / this.slides.length) * 100;
+                this.progressBar.style.width = progress + '%';
+            }
+
+            /* --- Navigation dots --- */
+            setupNavDots() {
+                const container = document.getElementById('navDots');
+                if (!container) return;
+
+                this.slides.forEach((slide, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', slide.dataset.title || `Folie ${i + 1}`);
+                    dot.addEventListener('click', () => this.goToSlide(i));
+                    container.appendChild(dot);
+                });
+            }
+
+            updateNavDots() {
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === this.currentSlide);
+                });
+                // Toggle light/dark theme for nav dots
+                const navDots = document.getElementById('navDots');
+                if (navDots && this.slides[this.currentSlide]) {
+                    navDots.classList.toggle('on-light', this.slides[this.currentSlide].classList.contains('light'));
+                }
+            }
+        }
+
+        // Initialize presentation
+        document.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+
+    <!-- ===========================================
+       OER FINDER WEB COMPONENT LOADER
+       Tries to load the actual web components.
+       If successful, replaces the CSS mockup with
+       the live plugin. If not, the mockup remains.
+       =========================================== -->
+    <script type="module">
+        async function tryLoadOerComponents() {
+            const sources = [
+                // Try jsdelivr (works if package is on public npm)
+                'https://cdn.jsdelivr.net/npm/@edufeed-org/oer-finder-plugin/+esm',
+                // Try unpkg
+                'https://unpkg.com/@edufeed-org/oer-finder-plugin'
+            ];
+
+            for (const src of sources) {
+                try {
+                    await import(src);
+                    // Components loaded - show live demo, hide mockup
+                    const fallback = document.getElementById('demoFallback');
+                    const live = document.getElementById('demoLive');
+                    if (fallback) fallback.style.display = 'none';
+                    if (live) {
+                        live.style.display = 'block';
+                        // Update API URL from config
+                        const oerSearch = live.querySelector('oer-search');
+                        if (oerSearch && window.OER_DEMO_URL) {
+                            oerSearch.setAttribute('api-url', window.OER_DEMO_URL);
+                        }
+                    }
+                    return; // Success - stop trying
+                } catch (e) {
+                    // This source didn't work, try next
+                }
+            }
+            // All sources failed - mockup stays visible (default state)
+        }
+
+        tryLoadOerComponents();
+    </script>
+</body>
+</html>
