@@ -5,8 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OER Finder Plugin — Abschlusspräsentation</title>
 
-    <!-- Fonts: Be Vietnam Pro (headings/body) + Fira Code (mono accents) -->
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Fonts: Be Vietnam Pro (headings/body) + Fira Code (mono accents) — self-hosted, OFL license -->
+    <style>
+        @font-face { font-family: 'Be Vietnam Pro'; font-weight: 300; font-display: swap; src: url(fonts/be-vietnam-pro-300.woff2) format('woff2'); }
+        @font-face { font-family: 'Be Vietnam Pro'; font-weight: 400; font-display: swap; src: url(fonts/be-vietnam-pro-400.woff2) format('woff2'); }
+        @font-face { font-family: 'Be Vietnam Pro'; font-weight: 500; font-display: swap; src: url(fonts/be-vietnam-pro-500.woff2) format('woff2'); }
+        @font-face { font-family: 'Be Vietnam Pro'; font-weight: 600; font-display: swap; src: url(fonts/be-vietnam-pro-600.woff2) format('woff2'); }
+        @font-face { font-family: 'Be Vietnam Pro'; font-weight: 700; font-display: swap; src: url(fonts/be-vietnam-pro-700.woff2) format('woff2'); }
+        @font-face { font-family: 'Be Vietnam Pro'; font-weight: 800; font-display: swap; src: url(fonts/be-vietnam-pro-800.woff2) format('woff2'); }
+        @font-face { font-family: 'Fira Code'; font-weight: 400; font-display: swap; src: url(fonts/fira-code-400.woff2) format('woff2'); }
+        @font-face { font-family: 'Fira Code'; font-weight: 500; font-display: swap; src: url(fonts/fira-code-500.woff2) format('woff2'); }
+    </style>
 
     <!--
         ╔══════════════════════════════════════════╗
@@ -769,14 +778,14 @@
     <section class="slide title-slide" data-title="Titel">
         <div class="top-bar">
             <span class="brand">B310 Digital GmbH &middot; OER Finder Plugin</span>
-            <span class="slide-meta">Abschlusspräsentation &middot; 2026</span>
+            <span class="slide-meta">Abschlusspräsentation &middot; 11. März 2026</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="slide-content" style="flex-direction: row; align-items: center; gap: clamp(1.5rem, 4vw, 4rem);">
             <div style="flex: 1; min-width: 0;">
                 <div class="chip reveal">Abschlusspräsentation</div>
                 <h1 class="reveal">OER Finder<br><span class="highlight">Plugin</span></h1>
-                <p class="body-text reveal">Alle offenen Bildungsmaterialien an einem Ort &mdash; einfach durchsuchbar, datenschutzfreundlich und frei verfügbar.</p>
+                <p class="body-text reveal">Offenen Bildungsmaterialien direkt integriert in Endanwendungen &mdash; einfach durchsuchbar, datenschutzfreundlich und frei verfügbar.</p>
             </div>
             <div class="reveal" style="flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0;">
                 <img src="oer-finder-plugin-logo.png" alt="OER Finder Plugin Logo" style="width: clamp(150px, 30vw, 380px); max-height: min(60vh, 380px); object-fit: contain; filter: drop-shadow(0 8px 30px rgba(207,255,178,0.2));">
@@ -785,166 +794,116 @@
     </section>
 
     <!-- ===========================================
-         SLIDE 2: AGENDA
+         AGENDA
          =========================================== -->
     <section class="slide light" data-title="Agenda">
         <div class="top-bar">
             <span class="brand">Agenda</span>
-            <span class="slide-meta">02 / 17</span>
+            <span class="slide-meta">Überblick</span>
         </div>
         <div class="orb orb-2"></div>
         <div class="slide-content">
             <div class="chip reveal">Überblick</div>
-            <h2 class="reveal">Was erwartet euch?</h2>
+            <h2 class="reveal">Vortragsinhalt</h2>
             <ul class="bullets reveal">
-                <li>Das Problem: Materialien verstreut &amp; schlecht auffindbar</li>
-                <li>Unsere Lösung: Das OER Finder Plugin</li>
-                <li>Server vs. Client &mdash; Chancen &amp; Herausforderungen</li>
-                <li>Live Demo &mdash; das Plugin in Aktion</li>
-                <li>Offenheit, Förderung &amp; Ausblick</li>
+                <li>Ausgangspunkt &amp; Förderziel</li>
+                <li>Umsetzung, Quellen &amp; Architektur</li>
+                <li>Live Demo</li>
+                <li>Wirkung, Erfolge &amp; Lernerfahrungen</li>
+                <li>Transfer, Verstetigung &amp; Ausblick</li>
+                <li>Vernetzung &amp; Anschlussfähigkeit</li>
             </ul>
         </div>
     </section>
 
     <!-- ===========================================
-         SLIDE 3: DAS PROBLEM
+         SLIDE 3: AUSGANGSPUNKT & FÖRDERZIEL
          =========================================== -->
-    <section class="slide" data-title="Problem">
+    <section class="slide" data-title="Ausgangspunkt">
         <div class="top-bar">
-            <span class="brand">Kontext</span>
-            <span class="slide-meta">03 / 17</span>
+            <span class="brand">Ausgangspunkt</span>
+            <span class="slide-meta">Ausgangspunkt &amp; Förderziel</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="slide-content">
-            <div class="chip reveal">Problemstellung</div>
+            <div class="chip reveal">Ausgangspunkt &amp; Förderziel</div>
             <h2 class="reveal">OER-Materialien sind <span class="highlight">fragmentiert</span></h2>
-            <ul class="bullets reveal">
-                <li>Inhalte verteilt auf isolierte Silos &mdash; Openverse, Wikimedia, ARASAAC usw. wissen nichts voneinander</li>
-                <li>Niemand durchsucht freiwillig ein Dutzend Websites, um ein passendes Bild zu finden</li>
-                <li>Fehlende oder inkonsistente Metadaten erschweren die Suche zusätzlich</li>
-                <li>Jede Anwendung müsste die Anbindung an jede Quelle selbst neu programmieren &mdash; enormer Aufwand</li>
-                <li><strong style="color:var(--accent);">Bequemlichkeit gewinnt</strong> &mdash; gebraucht wird eine wiederverwendbare, eng integrierte Suche über alle Quellen</li>
-            </ul>
+            <div class="two-col reveal" style="margin-top: var(--content-gap);">
+                <div>
+                    <h3>Das Problem</h3>
+                    <ul class="bullets">
+                        <li>Inhalte verteilt auf isolierte Silos &mdash; Openverse, Wikimedia, ARASAAC usw.</li>
+                        <li>Bequemlichkeit gewinnt: Gut nutzbare Angebote attraktiver als OER </li>
+                        <li>Jede Bildungsanwendung muss aktuell jede Quelle selbst neu anbinden &mdash; enormer Aufwand</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Die Idee &amp; das Förderziel</h3>
+                    <ul class="bullets">
+                        <li>Ein wiederverwendbares, offenes Plugin, welches möglichst viele OER-Quellen bündelt</li>
+                        <li>Direkt integrierbar in bestehende Bildungsanwendungen</li>
+                        <li>Aufbauend auf dem Nostr-Protokoll / Zusammenarbeit Edufeed</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- ===========================================
-         SLIDE 4: UNSERE LÖSUNG
+         UMSETZUNG: UNSERE LÖSUNG
          =========================================== -->
     <section class="slide" data-title="Lösung">
         <div class="top-bar">
-            <span class="brand">Vision</span>
-            <span class="slide-meta">04 / 17</span>
+            <span class="brand">Umsetzung</span>
+            <span class="slide-meta">Umsetzung &amp; Ergebnisse</span>
         </div>
         <div class="orb orb-2"></div>
         <div class="slide-content">
-            <div class="chip reveal">Unsere Lösung</div>
-            <h2 class="reveal">Ein Plugin für <span class="highlight">alle OER-Quellen</span></h2>
-            <p class="body-text reveal">Eine JavaScript-Komponente, die sich in die meisten Frameworks einbinden lässt &mdash; direkt in der eigenen Anwendung.</p>
+            <div class="chip reveal">Die Lösung</div>
+            <h2 class="reveal">Ein Plugin für <span class="highlight">OER-Quellen</span></h2>
+            <p class="body-text reveal">Eine JavaScript-Komponente, die sich in viele Frameworks einbinden lässt &mdash; direkt in der eigenen Anwendung.</p>
             <div class="cards reveal" style="margin-top: var(--content-gap); grid-template-columns: repeat(3, 1fr);">
                 <div class="card">
                     <div class="card-icon">&#x1F50D;</div>
-                    <h3>Wie eine Suchmaschine</h3>
-                    <p>Alle Quellen gleichzeitig durchsuchen &mdash; ein vertrautes Sucherlebnis</p>
+                    <h3>Metasuchmaschine</h3>
+                    <p>Ausgewählte Quellen gleichzeitig durchsuchen</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">&#x1F3AC;</div>
-                    <h3>Alle Medientypen</h3>
+                    <h3>Viele Medientypen</h3>
                     <p>Bilder, Texte, Audio &amp; Video &mdash; alles über eine Suche auffindbar</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">&#x2699;</div>
-                    <h3>Filterbar &amp; auswählbar</h3>
+                    <h3>Frei definierbare Filter</h3>
                     <p>Quellen gezielt ein-/ausschalten, Ergebnisse filtern</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">&#x1F9E9;</div>
-                    <h3>Direkt integriert</h3>
+                    <h3>Direkte Integration</h3>
                     <p>Läuft innerhalb der eigenen App &mdash; kein externer Dienst nötig</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">&#x1F4DC;</div>
-                    <h3>Metadaten &amp; Handler</h3>
-                    <p>Lizenz, Autor &amp; Co. direkt in der App nutzbar &mdash; Custom Handler für eigene Logik</p>
+                    <h3>Metadaten schnell integrieren</h3>
+                    <p>Lizenz, Autor &amp; Co. direkt in der App nutzbar</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">&#x1F3A8;</div>
                     <h3>Design anpassbar</h3>
                     <p>Farben, Schriften &amp; Layout per CSS-Variablen an das eigene Design anpassen</p>
                 </div>
-                <div class="card">
-                    <div class="card-icon">&#x2696;</div>
-                    <h3>Client oder Server</h3>
-                    <p>Freie Wahl zwischen client-seitigem und server-seitigem Betrieb</p>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- ===========================================
-         SLIDE 5: WIE ES FUNKTIONIERT
-         =========================================== -->
-    <section class="slide light" data-title="Funktionsweise">
-        <div class="top-bar">
-            <span class="brand">Funktionsweise</span>
-            <span class="slide-meta">05 / 17</span>
-        </div>
-        <div class="orb orb-1"></div>
-        <div class="slide-content">
-            <div class="chip reveal">So funktioniert es</div>
-            <h2 class="reveal">Der Weg einer <span class="highlight">Suchanfrage</span></h2>
-            <div class="arch-diagram reveal">
-                <div class="arch-box" style="min-width: clamp(220px, 40vw, 420px);">&#x1F4F1; Eigene Anwendung</div>
-                <div class="arch-arrow">&#x2193; <span style="font-size:0.7em; color:var(--text-muted);">eingebettet</span></div>
-                <div class="arch-box accent" style="min-width: clamp(220px, 40vw, 420px);">&#x1F9E9; OER Finder Plugin</div>
-                <div class="arch-arrow">&#x2193; <span style="font-size:0.7em; color:var(--text-muted);">optional</span></div>
-                <div class="arch-box" style="border-style: dashed; opacity: 0.85; min-width: clamp(220px, 40vw, 420px);">&#x1F5A5; Proxy Server</div>
-                <div class="arch-arrow">&#x2193; <span style="font-size:0.7em; color:var(--text-muted);">konfigurierbare Adapter</span></div>
-                <div class="arch-box accent" style="min-width: clamp(220px, 40vw, 420px);">z.&thinsp;B. AMB Nostr Relay, &hellip;</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===========================================
-         SLIDE 6: AMB-PROTOKOLL
-         =========================================== -->
-    <section class="slide" data-title="AMB-Protokoll">
-        <div class="top-bar">
-            <span class="brand">Standard</span>
-            <span class="slide-meta">06 / 17</span>
-        </div>
-        <div class="orb orb-2"></div>
-        <div class="slide-content">
-            <div class="chip reveal">Einheitliches Datenformat</div>
-            <h2 class="reveal">Das <span class="highlight">AMB-Protokoll</span></h2>
-            <p class="body-text reveal">Alle Quellen liefern Daten in unterschiedlichen Formaten. Das OER Finder Plugin bildet jedes Ergebnis auf den AMB-Standard ab &mdash; so wird jede Quelle zum <strong style="color:var(--accent);">First-Class Citizen</strong>.</p>
-            <div class="cards cards-3 reveal" style="margin-top: var(--content-gap);">
-                <div class="card">
-                    <div class="card-icon">&#x1F4D0;</div>
-                    <h3>Ein Standard</h3>
-                    <p>AMB definiert einheitliche Metadaten für alle Bildungsressourcen &mdash; unabhängig von der Herkunft.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">&#x1F310;</div>
-                    <h3>Dezentral via Nostr</h3>
-                    <p>Der AMB Nostr Relay speichert OER-Metadaten als kryptographisch signierte Events &mdash; ohne zentrale Instanz.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">&#x1F504;</div>
-                    <h3>Alles wird gemappt</h3>
-                    <p>Openverse, Wikimedia, ARASAAC &mdash; jede Quelle wird automatisch ins AMB-Format übersetzt.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===========================================
-         SLIDE 7: UNTERSTÜTZTE QUELLEN
+         UNTERSTÜTZTE QUELLEN
          =========================================== -->
     <section class="slide light" data-title="Quellen">
         <div class="top-bar">
             <span class="brand">Quellen</span>
-            <span class="slide-meta">07 / 17</span>
+            <span class="slide-meta">Quellen</span>
         </div>
         <div class="orb orb-2"></div>
         <div class="slide-content" style="align-items: center; text-align: center;">
@@ -977,6 +936,10 @@
                     <p>Freie Medien aus Wikipedia &amp; Co.</p>
                 </div>
                 <div class="card" style="text-align: center;">
+                    <h3>OERSI</h3>
+                    <p>Open Educational Resources Search Index &mdash; über Nostr AMB Relay</p>
+                </div>
+                <div class="card" style="text-align: center;">
                     <h3>+ Eigene Quellen</h3>
                     <p>Weitere Anbieter jederzeit ergänzbar</p>
                 </div>
@@ -985,12 +948,12 @@
     </section>
 
     <!-- ===========================================
-         SLIDE 8: SERVER VS. CLIENT
+         SERVER VS. CLIENT
          =========================================== -->
     <section class="slide" data-title="Server vs. Client">
         <div class="top-bar">
             <span class="brand">Architektur</span>
-            <span class="slide-meta">08 / 17</span>
+            <span class="slide-meta">Architektur</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="slide-content">
@@ -1022,45 +985,12 @@
     </section>
 
     <!-- ===========================================
-         SLIDE 9: HERAUSFORDERUNGEN
-         =========================================== -->
-    <section class="slide light" data-title="Herausforderungen">
-        <div class="top-bar">
-            <span class="brand">Herausforderungen</span>
-            <span class="slide-meta">09 / 17</span>
-        </div>
-        <div class="orb orb-2"></div>
-        <div class="slide-content">
-            <div class="chip reveal">Spannungsfelder</div>
-            <h2 class="reveal">CORS, Datenschutz &amp; <span class="highlight">Sicherheit</span></h2>
-            <div class="cards cards-3 reveal" style="margin-top: var(--element-gap);">
-                <div class="card">
-                    <div class="card-icon">&#x1F6AB;</div>
-                    <h3>Zugriffssperren (CORS)</h3>
-                    <p>Browser verbieten aus Sicherheitsgründen, dass eine Website Daten von einer anderen lädt. Viele OER-Quellen sind deshalb vom Browser aus nicht direkt erreichbar &mdash; ein eigener Server kann das umgehen.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">&#x1F6E1;</div>
-                    <h3>Datenschutz</h3>
-                    <p>Im Server-Modus bleiben Nutzerdaten geschützt. Im Client-Modus sehen Drittanbieter, wer was sucht.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">&#x1F6A8;</div>
-                    <h3>Sicherheit</h3>
-                    <p>Der Server-Proxy ruft externe URLs ab &mdash; manipulierte Links (z.&thinsp;B. aus AMB-Events) können ein Sicherheitsrisiko darstellen (SSRF).</p>
-                </div>
-            </div>
-            <p class="body-text reveal" style="margin-top: var(--content-gap); font-style: italic; text-align: center; max-width: none;">Jeder Modus löst ein Problem und schafft ein anderes &mdash; die richtige Wahl hängt vom Einsatzzweck ab.</p>
-        </div>
-    </section>
-
-    <!-- ===========================================
-         SLIDE 10: LIVE DEMO
+         LIVE DEMO
          =========================================== -->
     <section class="slide" data-title="Live Demo" id="demoSlide">
         <div class="top-bar">
             <span class="brand">Demo</span>
-            <span class="slide-meta">10 / 17</span>
+            <span class="slide-meta">Live Demo</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -1142,115 +1072,134 @@
     </section>
 
     <!-- ===========================================
-         SLIDE 11: EINFACHE EINBINDUNG
+         WIE ES FUNKTIONIERT
          =========================================== -->
-    <section class="slide" data-title="Einbindung">
+    <section class="slide light" data-title="Funktionsweise">
         <div class="top-bar">
-            <span class="brand">Integration</span>
-            <span class="slide-meta">11 / 17</span>
+            <span class="brand">Funktionsweise</span>
+            <span class="slide-meta">Funktionsweise</span>
         </div>
-        <div class="orb orb-2"></div>
-        <div class="slide-content">
-            <div class="chip reveal">So einfach geht's</div>
-            <h2 class="reveal">Einbindung in <span class="highlight">4 Zeilen*</span></h2>
-            <p class="body-text reveal">Das Plugin lässt sich in jede Website einbauen &mdash; mit nur wenigen Zeilen:</p>
-            <pre class="code-block reveal" style="margin-top: var(--content-gap); white-space: pre; tab-size: 2;"><span class="tag">&lt;oer-search</span> <span class="type">api-url</span>=<span class="string">"https://mein-server.de"</span><span class="tag">&gt;</span>
-  <span class="tag">&lt;oer-list&gt;&lt;/oer-list&gt;</span>
-  <span class="tag">&lt;oer-load-more&gt;&lt;/oer-load-more&gt;</span>
-<span class="tag">&lt;/oer-search&gt;</span></pre>
-            <p class="body-text reveal" style="margin-top: var(--content-gap); font-style: italic;">Das ist alles &mdash; Suche, Ergebnisliste und Nachladen sind sofort einsatzbereit.</p>
-            <p class="reveal" style="margin-top: var(--element-gap); font-size: var(--small-size); color: var(--text-muted);">* Weiterer Code nötig für die genaue Definition des Verhaltens</p>
-        </div>
-    </section>
-
-    <!-- ===========================================
-         SLIDE 12: INTEGRATIONSSCHRITTE
-         =========================================== -->
-    <section class="slide light" data-title="Integrationsschritte">
-        <div class="top-bar">
-            <span class="brand">Integration</span>
-            <span class="slide-meta">12 / 17</span>
-        </div>
-        <div class="orb orb-2"></div>
-        <div class="slide-content">
-            <div class="chip reveal">Schritt für Schritt</div>
-            <h2 class="reveal">So wird das Plugin <span class="highlight">eingebunden</span></h2>
-            <div class="reveal" style="margin-top: var(--content-gap); display: flex; align-items: center; gap: clamp(0.3rem, 0.8vw, 0.6rem); justify-content: center;">
-                <div class="card" style="text-align: center; flex: 1; max-width: 280px;">
-                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x1F4E6;</div>
-                    <h3>1. Plugin installieren</h3>
-                    <p>Das npm-Paket in das eigene Projekt einbinden</p>
-                </div>
-                <span style="font-size: clamp(1.2rem, 2.5vw, 2rem); color: rgba(0,31,75,0.3); flex-shrink: 0;">&#x27A1;</span>
-                <div class="card" style="text-align: center; flex: 1; max-width: 280px;">
-                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x1F9E9;</div>
-                    <h3>2. Web Components einsetzen</h3>
-                    <p>HTML-Struktur in die eigene Seite einfügen</p>
-                </div>
-                <span style="font-size: clamp(1.2rem, 2.5vw, 2rem); color: rgba(0,31,75,0.3); flex-shrink: 0;">&#x27A1;</span>
-                <div class="card" style="text-align: center; flex: 1; max-width: 280px;">
-                    <div class="card-icon" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">&#x2699;</div>
-                    <h3>3. Verhalten definieren</h3>
-                    <p>Click-Handler &amp; Anpassungen &mdash; z.&thinsp;B. was beim Klick auf ein Ergebnis passiert</p>
-                </div>
+        <div class="orb orb-1"></div>
+        <div class="slide-content" style="padding: clamp(0.5rem, 1vw, 1rem); padding-top: clamp(2.5rem, 6vh, 4rem);">
+            <h2 class="reveal" style="text-align: center; margin-bottom: clamp(0.3rem, 0.8vh, 0.6rem); font-size: clamp(1.3rem, 3vw, 2.2rem);">Der Weg einer <span class="highlight">Suchanfrage</span></h2>
+            <div class="reveal" style="flex: 1; display: flex; justify-content: center; align-items: center; min-height: 0; width: 100%;">
+                <img src="architecture.svg" alt="OER Finder Plugin Architektur: Applications → OER Proxy → Sources → Edufeed Network" style="width: 100%; height: 100%; max-height: calc(100vh - clamp(5rem, 12vh, 8rem)); object-fit: contain; border-radius: 8px;">
             </div>
         </div>
     </section>
 
     <!-- ===========================================
-         SLIDE 13: DATENSCHUTZ
+         SLIDE 7: AMB-PROTOKOLL
          =========================================== -->
-    <section class="slide light" data-title="Datenschutz">
+    <section class="slide" data-title="AMB-Protokoll">
         <div class="top-bar">
-            <span class="brand">Datenschutz</span>
-            <span class="slide-meta">13 / 17</span>
+            <span class="brand">Standard</span>
+            <span class="slide-meta">AMB-Protokoll</span>
+        </div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content">
+            <div class="chip reveal">Einheitliches Datenformat</div>
+            <h2 class="reveal">Das <span class="highlight">AMB-Protokoll</span></h2>
+            <p class="body-text reveal">Alle Quellen liefern Daten in unterschiedlichen Formaten. Das OER Finder Plugin bildet jedes Ergebnis auf den AMB-Standard ab &mdash; so wird jede Quelle zum <strong style="color:var(--accent);">First-Class Citizen</strong>.</p>
+            <div class="cards cards-3 reveal" style="margin-top: var(--content-gap);">
+                <div class="card">
+                    <div class="card-icon">&#x1F4D0;</div>
+                    <h3>Ein Standard</h3>
+                    <p>AMB definiert einheitliche Metadaten für alle Bildungsressourcen &mdash; unabhängig von der Herkunft.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F310;</div>
+                    <h3>Dezentral via Nostr</h3>
+                    <p>Der AMB Nostr Relay speichert OER-Metadaten als kryptographisch signierte Events &mdash; ohne zentrale Instanz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F504;</div>
+                    <h3>Alles wird gemappt</h3>
+                    <p>Openverse, Wikimedia, ARASAAC &mdash; jede Quelle wird automatisch ins AMB-Format übersetzt.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         WIRKUNG, ERFOLGE & LERNERFAHRUNGEN
+         =========================================== -->
+    <section class="slide" data-title="Wirkung & Lernerfahrungen">
+        <div class="top-bar">
+            <span class="brand">Wirkung</span>
+            <span class="slide-meta">Wirkung &amp; Lernerfahrungen</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="slide-content">
-            <div class="chip reveal">Privacy by Design</div>
-            <h2 class="reveal">Datenschutz <span class="highlight">eingebaut</span></h2>
-            <div class="cards cards-2 reveal" style="margin-top: var(--element-gap);">
+            <div class="chip reveal">Wirkung, Erfolge &amp; Lernerfahrungen</div>
+            <h2 class="reveal">Was wir <span class="highlight">gelernt</span> haben</h2>
+            <div class="cards cards-3 reveal" style="margin-top: var(--element-gap);">
                 <div class="card">
-                    <div class="card-icon">&#x1F6E1;</div>
-                    <h3>Bilder über eigenen Server</h3>
-                    <p>Vorschaubilder werden über den eigenen Server geladen &mdash; so erfahren externe Anbieter nicht, wer sucht.</p>
+                    <div class="card-icon">&#x1F3AF;</div>
+                    <h3>Wirkung bei Zielgruppen</h3>
+                    <ul class="bullets">
+                        <li>Nutzertests über kits.app in Vorbereitung</li>
+                        <li>Integriert in edufeed Kanban-Editor</li>
+                        <li>In 3 Frameworks getestet (React, Svelte, Angular)</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <div class="card-icon">&#x1F50F;</div>
-                    <h3>Keine Tracking-Gefahr</h3>
-                    <p>Der Browser der Nutzenden hat keinen direkten Kontakt zu Drittanbietern. Die Privatsphäre bleibt geschützt.</p>
+                    <div class="card-icon">&#x2705;</div>
+                    <h3>Was gut funktioniert hat</h3>
+                    <ul class="bullets">
+                        <li>Edufeed-Zusammenarbeit bei AMB &amp; Nostr</li>
+                        <li>Nostr-Relays als durchsuchbare Datenspeicher (Edufeed / Steffen)</li>
+                        <li>OER-Metadaten (bspw. Lizenz) bleiben erhalten</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F4A1;</div>
+                    <h3>Zentrale Lernerfahrungen</h3>
+                    <ul class="bullets">
+                        <li>Architektur und Aufbau wiederverwendbarer JS-Komponenten mit Adaptersystem</li>
+                        <li>Einfache OER-Integration ist in einer fragmentierten Landschaft eine Herausforderung aber möglich!</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ===========================================
-         SLIDE 14: OPEN SOURCE & ERWEITERBAR
+         TRANSFER, VERSTETIGUNG & AUSBLICK
          =========================================== -->
-    <section class="slide light" data-title="Open Source">
+    <section class="slide light" data-title="Transfer & Ausblick">
         <div class="top-bar">
-            <span class="brand">Open Source</span>
-            <span class="slide-meta">14 / 17</span>
+            <span class="brand">Ausblick</span>
+            <span class="slide-meta">Transfer &amp; Verstetigung</span>
         </div>
         <div class="orb orb-2"></div>
         <div class="slide-content">
-            <div class="chip reveal">Offenheit</div>
-            <h2 class="reveal">Open Source &amp; <span class="highlight">erweiterbar</span></h2>
-            <div class="two-col reveal">
-                <div>
-                    <h3>Frei verfügbar</h3>
+            <div class="chip reveal">Transfer, Verstetigung &amp; Ausblick</div>
+            <h2 class="reveal">Wie geht es <span class="highlight">weiter</span>?</h2>
+            <div class="cards cards-3 reveal" style="margin-top: var(--element-gap);">
+                <div class="card">
+                    <div class="card-icon">&#x1F680;</div>
+                    <h3>Transfer &amp; Skalierung</h3>
                     <ul class="bullets">
-                        <li>MIT-Lizenz &mdash; kostenlos nutzbar</li>
-                        <li>Quellcode auf GitHub einsehbar</li>
-                        <li>Jeder kann mitentwickeln</li>
+                        <li>Integration in weitere Bildungsanwendungen (auf Web-Basis)</li>
+                        <li>Integration weiterer OER-Plattformen (über Nostr oder Plugin)</li>
                     </ul>
                 </div>
-                <div>
-                    <h3>Leicht erweiterbar</h3>
+                <div class="card">
+                    <div class="card-icon">&#x1F504;</div>
+                    <h3>Verstetigung</h3>
                     <ul class="bullets">
-                        <li>Neue OER-Quellen einfach anbindbar</li>
-                        <li>Funktioniert mit React, Angular, Svelte &amp; Co.</li>
-                        <li>Community-getriebene Entwicklung</li>
+                        <li>Open Source &mdash; offen für Mitarbeit und Erweiterungen</li>
+                        <li>Je häufiger integriert, desto höher die Chance für langfristiges Überleben</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#x1F4CB;</div>
+                    <h3>Nächste Schritte</h3>
+                    <ul class="bullets">
+                        <li>Live-Launch in kits.app Anwendungen &amp; Feedback</li>
+                        <li>Vortrag bei Edu- oder Entwickler Meetup bzw. Konferenz</li>
                     </ul>
                 </div>
             </div>
@@ -1258,32 +1207,32 @@
     </section>
 
     <!-- ===========================================
-         SLIDE 15: FÖRDERUNG & LIZENZ
+         VERNETZUNG & ANSCHLUSSFÄHIGKEIT
          =========================================== -->
-    <section class="slide light" data-title="Förderung">
+    <section class="slide" data-title="Vernetzung">
         <div class="top-bar">
-            <span class="brand">Projekt</span>
-            <span class="slide-meta">15 / 17</span>
+            <span class="brand">Vernetzung</span>
+            <span class="slide-meta">Vernetzung &amp; Anschlussfähigkeit</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="slide-content">
-            <div class="chip reveal">Förderung</div>
-            <h2 class="reveal">Förderung &amp; <span class="highlight">Lizenz</span></h2>
-            <div class="two-col reveal">
+            <div class="chip reveal">Vernetzung &amp; Anschlussfähigkeit</div>
+            <h2 class="reveal">Kooperationen &amp; <span class="highlight">Anschlüsse</span></h2>
+            <div class="two-col reveal" style="margin-top: var(--content-gap);">
                 <div>
-                    <h3>Förderung</h3>
+                    <h3>Entstandene Kooperationen</h3>
                     <ul class="bullets">
-                        <li>Gefördert durch das BMBFSJ</li>
-                        <li>Förderkennzeichen: 01PZ25003</li>
-                        <li>Organisation: edufeed-org</li>
+                        <li>RPI-Virtuell &mdash; Religionspädagogische Materialien als Quelle angebunden</li>
+                        <li>AMB / Nostr-Community &mdash; Dezentrales Protokoll für Bildungsmetadaten</li>
+                        <li>Open Source Tools von kits.app &mdash; Integration in Vorbereitung</li>
                     </ul>
                 </div>
                 <div>
-                    <h3>Lizenz</h3>
+                    <h3>Anknüpfungspunkte</h3>
                     <ul class="bullets">
-                        <li>MIT-Lizenz (vollständig Open Source)</li>
-                        <li>Freie Nutzung &amp; Weiterentwicklung</li>
-                        <li>29 veröffentlichte Versionen</li>
+                        <li>Theoretisch jede Bildungsplattform, die OER-Inhalte einbinden möchte oder anbietet</li>
+                        <li>AMB-Standard als gemeinsame Schnittstelle zu anderen Projekten</li>
+                        <li>Edufeed-Netzwerk &mdash; gemeinsame Infrastruktur für offene Bildungsanwendungen</li>
                     </ul>
                 </div>
             </div>
@@ -1291,67 +1240,97 @@
     </section>
 
     <!-- ===========================================
-         SLIDE 16: ZUSAMMENFASSUNG
+         ZUSAMMENFASSUNG
          =========================================== -->
-    <section class="slide" data-title="Zusammenfassung">
+    <section class="slide light" data-title="Zusammenfassung">
         <div class="top-bar">
             <span class="brand">Fazit</span>
-            <span class="slide-meta">16 / 17</span>
+            <span class="slide-meta">Zusammenfassung</span>
         </div>
         <div class="orb orb-2"></div>
         <div class="slide-content">
             <div class="chip reveal">Zusammenfassung</div>
-            <h2 class="reveal">Was wir gebaut haben</h2>
+            <h2 class="reveal">Was wir <span class="highlight">erreicht</span> haben</h2>
             <div class="cards cards-2 reveal" style="margin-top: var(--element-gap);">
                 <div class="card">
+                    <div class="card-icon">&#x1F50D;</div>
                     <h3>Einheitliche OER-Suche</h3>
                     <p>Viele Quellen mit einer einzigen Suchanfrage durchsuchen</p>
                 </div>
                 <div class="card">
+                    <div class="card-icon">&#x1F512;</div>
                     <h3>Datenschutzfreundlich</h3>
                     <p>Nutzerdaten bleiben geschützt durch integrierten Proxy</p>
                 </div>
                 <div class="card">
+                    <div class="card-icon">&#x1F9E9;</div>
                     <h3>Einfach einbindbar</h3>
                     <p>Wenige Zeilen genügen für die Integration in jede Website</p>
                 </div>
                 <div class="card">
+                    <div class="card-icon">&#x1F4D6;</div>
                     <h3>Open Source</h3>
-                    <p>Frei verfügbar, erweiterbar und von der Community getragen</p>
+                    <p>MIT-Lizenz, frei verfügbar, erweiterbar und von der Community getragen</p>
                 </div>
             </div>
             <div class="stats reveal" style="margin-top: var(--content-gap);">
                 <div class="stat">
                     <div class="stat-number">6+</div>
-                    <div class="stat-label">OER-Quellen</div>
+                    <div class="stat-label">Quellen-Adapter</div>
                 </div>
                 <div class="stat">
                     <div class="stat-number">3</div>
-                    <div class="stat-label">Zeilen Code</div>
+                    <div class="stat-label">Integration in Frameworks getestet</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">29</div>
-                    <div class="stat-label">Releases</div>
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Modi (Client / Server)</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ===========================================
-         SLIDE 17: DANKE / FRAGEN
+         README.md
+         =========================================== -->
+    <section class="slide" data-title="README">
+        <div class="top-bar">
+            <span class="brand">README</span>
+            <span class="slide-meta">README.md</span>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="slide-content" style="justify-content: center; align-items: center; text-align: center;">
+            <div class="chip reveal">Show your README</div>
+            <h2 class="reveal">README.md &mdash; <span class="highlight">Live auf GitHub</span></h2>
+            <p class="body-text reveal" style="max-width: none; margin-bottom: var(--content-gap);">Installation, Verwendung, Quellen &amp; Beispiele &mdash; alles im Repository:</p>
+            <a class="demo-btn reveal" href="https://github.com/edufeed-org/oer-finder-plugin" target="_blank" rel="noopener">
+                &#x1F4D6; &ensp;README auf GitHub öffnen
+            </a>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         DANKE / FRAGEN
          =========================================== -->
     <section class="slide end-slide" data-title="Ende">
         <div class="top-bar">
             <span class="brand">OER Finder Plugin</span>
-            <span class="slide-meta">Abschlusspräsentation &middot; 2026</span>
+            <span class="slide-meta">Abschlusspräsentation &middot; 11. März 2026</span>
         </div>
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
-        <div class="slide-content">
-            <div class="chip reveal">Vielen Dank</div>
-            <h1 class="reveal" style="margin-bottom: var(--content-gap);">Fragen<span class="highlight">?</span></h1>
-            <p class="body-text reveal" style="text-align: center; max-width: none;">
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <h1 class="reveal" style="margin-bottom: var(--element-gap);">Fragen<span class="highlight">?</span></h1>
+            <pre class="code-block reveal" style="white-space: pre; tab-size: 2; text-align: left; margin-bottom: var(--content-gap);"><span class="tag">&lt;oer-search</span> <span class="type">api-url</span>=<span class="string">"https://mein-server.de"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;oer-list&gt;&lt;/oer-list&gt;</span>
+  <span class="tag">&lt;oer-load-more&gt;&lt;/oer-load-more&gt;</span>
+<span class="tag">&lt;/oer-search&gt;</span></pre>
+            <p class="body-text reveal" style="max-width: none;">
                 github.com/edufeed-org/oer-finder-plugin
+            </p>
+            <p class="body-text reveal" style="max-width: none; margin-top: var(--element-gap);">
+                Jannik Streek, jannik@b310.de
             </p>
         </div>
     </section>
@@ -1556,5 +1535,6 @@
 
         tryLoadOerComponents();
     </script>
+
 </body>
 </html>
