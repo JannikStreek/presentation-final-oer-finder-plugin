@@ -25,7 +25,7 @@
         ╚══════════════════════════════════════════╝
     -->
     <script>
-        window.OER_DEMO_URL = 'http://localhost:3000';
+        window.OER_DEMO_URL = 'http://localhost:5173';
     </script>
 
     <style>
@@ -1500,47 +1500,5 @@
             new SlidePresentation();
         });
     </script>
-
-    <!-- ===========================================
-       OER FINDER WEB COMPONENT LOADER
-       Tries to load the actual web components.
-       If successful, replaces the CSS mockup with
-       the live plugin. If not, the mockup remains.
-       =========================================== -->
-    <script type="module">
-        async function tryLoadOerComponents() {
-            const sources = [
-                // Try jsdelivr (works if package is on public npm)
-                'https://cdn.jsdelivr.net/npm/@edufeed-org/oer-finder-plugin/+esm',
-                // Try unpkg
-                'https://unpkg.com/@edufeed-org/oer-finder-plugin'
-            ];
-
-            for (const src of sources) {
-                try {
-                    await import(src);
-                    // Components loaded - show live demo, hide mockup
-                    const fallback = document.getElementById('demoFallback');
-                    const live = document.getElementById('demoLive');
-                    if (fallback) fallback.style.display = 'none';
-                    if (live) {
-                        live.style.display = 'block';
-                        // Update API URL from config
-                        const oerSearch = live.querySelector('oer-search');
-                        if (oerSearch && window.OER_DEMO_URL) {
-                            oerSearch.setAttribute('api-url', window.OER_DEMO_URL);
-                        }
-                    }
-                    return; // Success - stop trying
-                } catch (e) {
-                    // This source didn't work, try next
-                }
-            }
-            // All sources failed - mockup stays visible (default state)
-        }
-
-        tryLoadOerComponents();
-    </script>
-
 </body>
 </html>
