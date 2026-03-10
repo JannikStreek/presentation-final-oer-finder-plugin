@@ -785,7 +785,7 @@
             <div style="flex: 1; min-width: 0;">
                 <div class="chip reveal">Abschlusspräsentation</div>
                 <h1 class="reveal">OER Finder<br><span class="highlight">Plugin</span></h1>
-                <p class="body-text reveal">Offenen Bildungsmaterialien direkt integriert in Endanwendungen &mdash; einfach durchsuchbar, datenschutzfreundlich und frei verfügbar.</p>
+                <p class="body-text reveal">Offene Bildungsmaterialien direkt integriert in Endanwendungen &mdash; einfach durchsuchbar, datenschutzfreundlich und frei verfügbar.</p>
             </div>
             <div class="reveal" style="flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0;">
                 <img src="oer-finder-plugin-logo.png" alt="OER Finder Plugin Logo" style="width: clamp(150px, 30vw, 380px); max-height: min(60vh, 380px); object-fit: contain; filter: drop-shadow(0 8px 30px rgba(207,255,178,0.2));">
@@ -840,7 +840,7 @@
                 <div>
                     <h3>Die Idee &amp; das Förderziel</h3>
                     <ul class="bullets">
-                        <li>Ein wiederverwendbares, offenes Plugin, welches möglichst viele OER-Quellen bündelt</li>
+                        <li>Ein wiederverwendbares, offenes Plugin, welches sich mit möglichst vielen OER-Quellen vernetzt</li>
                         <li>Direkt integrierbar in bestehende Bildungsanwendungen</li>
                         <li>Aufbauend auf dem Nostr-Protokoll / Zusammenarbeit Edufeed</li>
                     </ul>
@@ -936,12 +936,12 @@
                     <p>Freie Medien aus Wikipedia &amp; Co.</p>
                 </div>
                 <div class="card" style="text-align: center;">
-                    <h3>OERSI</h3>
-                    <p>Open Educational Resources Search Index &mdash; über Nostr AMB Relay</p>
+                    <h3>Externe Anbieter über AMB Nostr-Relays</h3>
+                    <p>Bspw. PeerTube Anbindung (DIGILAB, Medienzentrum Harburg), OERSI-Relay (durch Team Edufeed)</p>
                 </div>
                 <div class="card" style="text-align: center;">
                     <h3>+ Eigene Quellen</h3>
-                    <p>Weitere Anbieter jederzeit ergänzbar</p>
+                    <p>Weitere Adapter jederzeit ergänzbar</p>
                 </div>
             </div>
         </div>
@@ -1037,7 +1037,7 @@
                             <div class="demo-result-thumb" style="background:linear-gradient(135deg,#f3e8ff,#e9d5ff);">&#x1F331;</div>
                             <div class="demo-result-info">
                                 <div class="demo-result-title">Botanik Grundlagen</div>
-                                <span class="demo-source-badge badge-amb">AMB Relay</span>
+                                <span class="demo-source-badge badge-amb">AMB Relay (u.a. OERSI, Peertube)</span>
                             </div>
                         </div>
                         <div class="demo-result-card">
@@ -1056,7 +1056,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="demo-btn" onclick="window.open(window.OER_DEMO_URL || 'http://localhost:3000', '_blank')">
+                <button class="demo-btn" onclick="window.open(window.OER_DEMO_URL || 'http://localhost:5173', '_blank')">
                     &#x25B6; &ensp;Live Demo öffnen
                 </button>
             </div>
@@ -1098,6 +1098,7 @@
         </div>
         <div class="orb orb-2"></div>
         <div class="slide-content">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
             <div class="chip reveal">Einheitliches Datenformat</div>
             <h2 class="reveal">Der <span class="highlight">AMB-Standard</span></h2>
             <p class="body-text reveal">Alle Quellen liefern Daten in unterschiedlichen Formaten. Das OER Finder Plugin bildet jedes Ergebnis auf den AMB-Standard ab &mdash; so wird jede Quelle zum <strong style="color:var(--accent);">First-Class Citizen</strong>.</p>
@@ -1118,6 +1119,10 @@
                     <p>Openverse, Wikimedia, ARASAAC &mdash; andere Quellen werden in den AMB-Standard überführt.</p>
                 </div>
             </div>
+            </div>
+            <p class="reveal" style="font-size: clamp(0.7rem, 0.9vw, 0.85rem); color: var(--text-muted); font-family: var(--font-mono);">
+                AMB = Allgemeines Metadatenprofil für Bildungsressourcen &mdash; <a href="https://dini-ag-kim.github.io/amb/draft/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Spezifikation</a>
+            </p>
         </div>
     </section>
 
@@ -1133,14 +1138,14 @@
         <div class="orb orb-1"></div>
         <div class="slide-content">
             <div class="chip reveal">Wirkung, Erfolge &amp; Lernerfahrungen</div>
-            <h2 class="reveal">Erkenntnisse die <span class="highlight">gelernt</span> wurden</h2>
+            <h2 class="reveal">Die <span class="highlight">Learnings</span></h2>
             <div class="cards cards-3 reveal" style="margin-top: var(--element-gap);">
                 <div class="card">
                     <div class="card-icon">&#x1F3AF;</div>
                     <h3>Wirkung bei Zielgruppen</h3>
                     <ul class="bullets">
                         <li>Nutzertests über kits.app in Vorbereitung</li>
-                        <li>Integriert in edufeed Kanban-Editor</li>
+                        <li>Integriert in Edufeed Kanban-Editor</li>
                         <li>Integration in 3 Frameworks getestet (React, Svelte, Angular)</li>
                     </ul>
                 </div>
@@ -1148,7 +1153,7 @@
                     <div class="card-icon">&#x2705;</div>
                     <h3>Was gut funktioniert hat</h3>
                     <ul class="bullets">
-                        <li>Edufeed-Zusammenarbeit bei AMB &amp; Nostr</li>
+                        <li>Edufeed Zusammenarbeit bei AMB &amp; Nostr</li>
                         <li>Nostr-Relays als durchsuchbare Datenspeicher (Umsetzung durch Gruppe Edufeed / Steffen)</li>
                         <li>OER-Metadaten (bspw. Lizenz) bleiben erhalten</li>
                     </ul>
@@ -1184,7 +1189,7 @@
                     <h3>Transfer &amp; Skalierung</h3>
                     <ul class="bullets">
                         <li>Integration in weitere Bildungsanwendungen (auf Web-Basis)</li>
-                        <li>Adapter für weiterer OER-Plattformen (über Nostr oder Plugin)</li>
+                        <li>Adapter für weitere OER-Plattformen (über Nostr oder Plugin)</li>
                     </ul>
                 </div>
                 <div class="card">
@@ -1224,7 +1229,7 @@
                     <h3>Entstandene Kooperationen</h3>
                     <ul class="bullets">
                         <li>RPI-Virtuell &mdash; Religionspädagogische Materialien als Quelle angebunden</li>
-                        <li>Testweiser Versuch Peertube/Fediverse Anbindung vom DIGILAB des Medienzentrums im Landkreis Harburg</li>
+                        <li>Möglichkeit der Peertube-/Fediverse-Datenübernahme vom DIGILAB des Medienzentrums im Landkreis Harburg</li>
                         <li>Open Source Tools von kits.app &mdash; Integration in Vorbereitung</li>
                     </ul>
                 </div>
@@ -1256,7 +1261,7 @@
                 <div class="card">
                     <div class="card-icon">&#x1F50D;</div>
                     <h3>Einheitliche OER-Suche</h3>
-                    <p>Viele Quellen mit einer einzigen Suchanfrage durchsuchen</p>
+                    <p>Viele Quellen mit einer einzigen Suchanfrage durchsuchen, u.a. PeerTube Inhalte</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">&#x1F512;</div>
@@ -1276,7 +1281,7 @@
             </div>
             <div class="stats reveal" style="margin-top: var(--content-gap);">
                 <div class="stat">
-                    <div class="stat-number">6+</div>
+                    <div class="stat-number">5</div>
                     <div class="stat-label">Quellen-Adapter</div>
                 </div>
                 <div class="stat">
@@ -1323,7 +1328,7 @@
         <div class="orb orb-2"></div>
         <div class="slide-content" style="align-items: center; text-align: center;">
             <h1 class="reveal" style="margin-bottom: var(--element-gap);">Fragen<span class="highlight">?</span></h1>
-            <pre class="code-block reveal" style="white-space: pre; tab-size: 2; text-align: left; margin-bottom: var(--content-gap);"><span class="tag">&lt;oer-search</span> <span class="type">api-url</span>=<span class="string">"https://mein-server.de"</span><span class="tag">&gt;</span>
+            <pre class="code-block reveal" style="white-space: pre; tab-size: 2; text-align: left; margin-bottom: var(--content-gap);"><span class="tag">&lt;oer-search</span><span class="tag">&gt;</span>
   <span class="tag">&lt;oer-list&gt;&lt;/oer-list&gt;</span>
   <span class="tag">&lt;oer-load-more&gt;&lt;/oer-load-more&gt;</span>
 <span class="tag">&lt;/oer-search&gt;</span></pre>
